@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Pterodactyl Panel Store | Hosting Game Server</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0a0c12 0%, #0f111a 100%);
+      color: #eef2ff;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* ========== BANNER FOTO JPG DI PALING ATAS ========== */
+    .top-banner {
+      width: 100%;
+      margin-bottom: 2rem;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeScaleIn 0.6s ease-out;
+    }
+
+    .top-banner:hover {
+      transform: scale(1.01);
+      box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .top-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 280px;
+    }
+
+    /* ========== RUNNING TEXT (MARQUEE MODERN) ========== */
+    .running-text {
+      background: linear-gradient(95deg, #1e293b, #0f172a);
+      border-radius: 60px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 2rem;
+      border: 1px solid #facc1550;
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.2);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .running-text marquee {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #facc15;
+      letter-spacing: 0.5px;
+    }
+
+    .running-text marquee i {
+      margin: 0 12px;
+      color: #4ade80;
+    }
+
+    /* header hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c084fc, #60a5fa, #34d399);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      animation: fadeSlideDown 0.7s ease-out;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #9ca3af;
+      margin-top: 0.75rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(96, 165, 250, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 1rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      margin-bottom: 1.2rem;
+      animation: pulseGlow 2s infinite;
+    }
+
+    /* grid panel */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* kartu produk */
+    .panel-card {
+      background: rgba(18, 22, 35, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 1.8rem 1.5rem 2rem;
+      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 10%, rgba(96, 165, 250, 0.1), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .panel-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: #60a5fa;
+      box-shadow: 0 30px 40px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(96, 165, 250, 0.3);
+    }
+
+    .panel-card:hover::before {
+      opacity: 1;
+    }
+
+    .ram-icon {
+      font-size: 3rem;
+      background: linear-gradient(145deg, #8b5cf6, #3b82f6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .gb-size {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(to right, #f0f9ff, #cbd5e1);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* HANYA TAMPILKAN ANGKA (1K, 2K, DLL) TANPA KATA "/ BULAN" */
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0.6rem 0 0.3rem;
+      color: #facc15;
+      text-shadow: 0 0 8px rgba(250, 204, 21, 0.3);
+    }
+
+    .order-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(95deg, #1e293b, #0f172a);
+      padding: 0.8rem 1.7rem;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 1.3rem;
+      transition: all 0.25s;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .order-btn i {
+      font-size: 1.2rem;
+      transition: transform 0.2s;
+    }
+
+    .panel-card:hover .order-btn {
+      background: linear-gradient(95deg, #2563eb, #1e40af);
+      border-color: #60a5fa;
+      color: white;
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
+    }
+
+    .panel-card:hover .order-btn i {
+      transform: translateX(5px);
+    }
+
+    /* efek klik */
+    .card-click-effect {
+      animation: cardBounce 0.28s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+    }
+
+    @keyframes cardBounce {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.97); background: rgba(96, 165, 250, 0.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* SECTION CLAIM GRATIS */
+    .free-claim-section {
+      background: linear-gradient(125deg, #0f172a, #0a0f1f);
+      border-radius: 2rem;
+      padding: 2rem;
+      margin: 2rem 0 2rem;
+      text-align: center;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      box-shadow: 0 10px 25px -8px black;
+      transition: all 0.3s;
+    }
+
+    .free-claim-section h2 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #facc15, #ffb347);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .free-claim-section p {
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+    }
+
+    .claim-btn {
+      background: linear-gradient(95deg, #22c55e, #16a34a);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 15px #22c55e80;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .claim-btn:active {
+      transform: scale(0.96);
+    }
+
+    .claim-btn.disabled {
+      background: #475569;
+      box-shadow: none;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .info-claim {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    /* footer */
+    .trust-section {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(71, 85, 105, 0.4);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7e8a98;
+    }
+
+    .trust-section i {
+      margin-right: 6px;
+      color: #38bdf8;
+    }
+
+    /* animasi */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeScaleIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); border-color: rgba(96, 165, 250, 0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(96, 165, 250, 0); border-color: rgba(96, 165, 250, 0.8); }
+      100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); border-color: rgba(96, 165, 250, 0.5); }
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(96, 165, 250, 0.6);
+      transform: scale(0);
+      animation: rippleAnim 0.5s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    .toast-notif {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #0f172ad9;
+      backdrop-filter: blur(20px);
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      color: white;
+      border-left: 5px solid #22c55e;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      font-size: 1rem;
+    }
+
+    .toast-notif.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    @media (max-width: 680px) {
+      body { padding: 1rem; }
+      .hero h1 { font-size: 2rem; }
+      .gb-size { font-size: 2rem; }
+      .price { font-size: 1.6rem; }
+      .free-claim-section h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- ========== FOTO JPG DI PALING ATAS ========== -->
+  <div class="top-banner">
+    <!-- GANTI URL "foto-pterodactyl.jpg" DENGAN FILE JPG KAMU -->
+    <img src="alief.jpg" alt="Pterodactyl Panel Banner">
+    <!-- Catatan: Ganti link diatas dengan foto jpg asli milikmu. Contoh: "uploads/banner-panel.jpg" -->
+  </div>
+
+  <!-- RUNNING TEXT GARANSI -->
+  <div class="running-text">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      <i class="fas fa-shield-alt"></i> ⚡ GARANSI PANEL 2 KALI GANTI JIKA MOKAD ⚡ <i class="fas fa-dragon"></i> 
+      ✅ Layanan Resmi & Cepat ✅ Support 24 Jam ✅ Claim Gratis 1x per HP
+    </marquee>
+  </div>
+
+  <div class="hero">
+    <div class="badge">
+      <i class="fas fa-dragon"></i> Pterodactyl Panel · Game Panel Hosting
+    </div>
+    <h1>⚡ Pterodactyl Panel Store ⚡</h1>
+    <p>High-performance game server panel | Instant activation | 24/7 Support via WhatsApp</p>
+  </div>
+
+  <div class="panel-grid" id="panelGrid"></div>
+
+  <!-- SECTION CLAIM GRATIS (SATU KALI PER HP) -->
+  <div class="free-claim-section" id="freeClaimSection">
+    <h2><i class="fas fa-gift"></i> Claim Panel Gratis!</h2>
+    <p>Dapatkan 1GB Pterodactyl Panel GRATIS (1x seumur hidup untuk 1 nomor HP / device)</p>
+    <button id="claimFreeBtn" class="claim-btn"><i class="fab fa-whatsapp"></i> Claim Sekarang</button>
+    <div class="info-claim">
+      <i class="fas fa-mobile-alt"></i> Hanya berlaku 1 kali per HP / perangkat. Klaim via WhatsApp.
+    </div>
+  </div>
+
+  <div class="trust-section">
+    <div><i class="fas fa-bolt"></i> Instan Aktivasi</div>
+    <div><i class="fab fa-whatsapp"></i> Respon Cepat (Official Store)</div>
+    <div><i class="fas fa-shield-alt"></i> Proteksi DDoS & Uptime 99.9%</div>
+    <div><i class="fas fa-sync-alt"></i> Garansi 2x ganti jika mokad</div>
+  </div>
+</div>
+
+<div id="toastMsg" class="toast-notif">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastText">Terima kasih! Mengarahkan ke WhatsApp...</span>
+</div>
+
+<script>
+  // Data panel sesuai permintaan (harga hanya "1K", "2K", tanpa embel-embel)
+  const panels = [
+    { gb: "1GB", h: "1K", l: "https://wa.link/3lqqwb" },
+    { gb: "2GB", h: "2K", l: "https://wa.link/q3yhe9" },
+    { gb: "3GB", h: "3K", l: "https://wa.link/mgw3y3" },
+    { gb: "4GB", h: "4K", l: "https://wa.link/gkqryg" },
+    { gb: "5GB", h: "5K", l: "https://wa.link/53upi2" },
+    { gb: "6GB", h: "6K", l: "https://wa.link/y3dcnc" },
+    { gb: "7GB", h: "7K", l: "https://wa.link/ch9jf8" },
+    { gb: "8GB", h: "8K", l: "https://wa.link/lwsjbn" },
+    { gb: "9GB", h: "9K", l: "https://wa.link/50lwrh" }
+  ];
+
+  // localStorage key untuk claim gratis (1x per HP)
+  const CLAIM_KEY = "ptero_free_claimed";
+
+  function isAlreadyClaimed() {
+    return localStorage.getItem(CLAIM_KEY) === "true";
+  }
+
+  function markClaimed() {
+    localStorage.setItem(CLAIM_KEY, "true");
+  }
+
+  function showToast(message, isSuccess = true) {
+    const toast = document.getElementById('toastMsg');
+    const toastText = document.getElementById('toastText');
+    const iconSpan = toast.querySelector('i');
+    if (isSuccess) {
+      iconSpan.className = "fas fa-check-circle";
+      iconSpan.style.color = "#4ade80";
+      toast.style.borderLeftColor = "#22c55e";
+    } else {
+      iconSpan.className = "fas fa-exclamation-triangle";
+      iconSpan.style.color = "#facc15";
+      toast.style.borderLeftColor = "#f97316";
+    }
+    toastText.innerText = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  function createRipple(event, element) {
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x}px`;
+    ripple.style.top = `${y}px`;
+    ripple.style.position = 'absolute';
+    element.style.position = 'relative';
+    element.style.overflow = 'hidden';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 500);
+  }
+
+  function animateCardClick(cardElement) {
+    cardElement.classList.add('card-click-effect');
+    setTimeout(() => cardElement.classList.remove('card-click-effect'), 280);
+  }
+
+  function handleOrder(panelItem, event, cardElement) {
+    if (event) event.stopPropagation();
+    if (cardElement && event) createRipple(event, cardElement);
+    if (cardElement) animateCardClick(cardElement);
+    showToast(`✨ Memesan Panel ${panelItem.gb} (${panelItem.h}) ✨ Mengarahkan ke WhatsApp...`, true);
+    setTimeout(() => {
+      window.open(panelItem.l, '_blank');
+    }, 400);
+  }
+
+  function renderPanels() {
+    const gridContainer = document.getElementById('panelGrid');
+    if (!gridContainer) return;
+    gridContainer.innerHTML = '';
+    panels.forEach(panel => {
+      const card = document.createElement('div');
+      card.className = 'panel-card';
+      card.setAttribute('data-gb', panel.gb);
+      card.setAttribute('data-price', panel.h);
+      card.setAttribute('data-walink', panel.l);
+      card.innerHTML = `
+        <div class="ram-icon"><i class="fas fa-microchip"></i></div>
+        <div class="gb-size">${panel.gb} RAM</div>
+        <div class="price">${panel.h}</div>
+        <div style="margin: 0.75rem 0; font-size: 0.8rem; background: #0b0f1a60; border-radius: 40px; padding: 0.2rem 0.8rem; display: inline-block;">
+          <i class="fas fa-server"></i> Pterodactyl Panel
+        </div>
+        <div class="order-btn"><span>Pesan Sekarang</span> <i class="fab fa-whatsapp"></i></div>
+      `;
+      card.addEventListener('click', (e) => {
+        const panelObj = { gb: card.getAttribute('data-gb'), h: card.getAttribute('data-price'), l: card.getAttribute('data-walink') };
+        handleOrder(panelObj, e, card);
+      });
+      gridContainer.appendChild(card);
+    });
+  }
+
+  // Setup claim gratis (1x per HP)
+  function setupFreeClaim() {
+    const claimBtn = document.getElementById('claimFreeBtn');
+    if (!claimBtn) return;
+    if (isAlreadyClaimed()) {
+      claimBtn.textContent = "Sudah Pernah Claim ✓";
+      claimBtn.classList.add('disabled');
+      claimBtn.disabled = true;
+      claimBtn.style.cursor = "not-allowed";
+    } else {
+      claimBtn.textContent = "🎁 Claim Panel Gratis (1GB) 🎁";
+      claimBtn.classList.remove('disabled');
+      claimBtn.disabled = false;
+    }
+
+    claimBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isAlreadyClaimed()) {
+        showToast("❌ Kamu sudah pernah claim gratis! Hanya 1x per HP.", false);
+        return;
+      }
+      // Tampilkan animasi konfirmasi dan redirect ke WA khusus claim gratis (bisa pakai link claim gratis)
+      // Karena tidak disediakan link claim gratis di data, kita gunakan link default (bisa diarahkan ke nomor CS)
+      const claimWhatsappLink = "https://wa.me/6281234567890?text=Halo%20saya%20ingin%20claim%20panel%20GRATIS%201GB%20Pterodactyl%20(1x%20per%20HP)";
+      showToast("🎉 Anda berhak claim gratis! Mengarahkan ke WhatsApp untuk verifikasi...", true);
+      setTimeout(() => {
+        window.open(claimWhatsappLink, '_blank');
+        // setelah klik, langsung tandai sudah pernah claim meskipun belum tentu sukses? lebih aman setelah buka wa, tetap tandai agar tidak di spam. Tapi jika user batal? lebih baik setelah berhasil dari CS?
+        // Karena aturan 1x per HP kita tandai setelah klik claim (mencegah spam klik). Etika store.
+        if (!isAlreadyClaimed()) {
+          markClaimed();
+          claimBtn.textContent = "Sudah Pernah Claim ✓";
+          claimBtn.classList.add('disabled');
+          claimBtn.disabled = true;
+          showToast("✅ Claim telah tercatat! Silakan selesaikan via WhatsApp.", true);
+        }
+      }, 400);
+    });
+  }
+
+  // staggered animasi untuk kartu
+  function addStaggeredAnimation() {
+    const cards = document.querySelectorAll('.panel-card');
+    cards.forEach((card, idx) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, idx * 70);
+    });
+  }
+
+  // inisialisasi
+  renderPanels();
+  setTimeout(() => addStaggeredAnimation(), 100);
+  setupFreeClaim();
+
+  // sambutan toast
+  window.addEventListener('load', () => {
+    const welcomeToast = document.getElementById('toastMsg');
+    const toastTextSpan = document.getElementById('toastText');
+    const iconSpan = welcomeToast.querySelector('i');
+    iconSpan.className = "fas fa-rocket";
+    iconSpan.style.color = "#38bdf8";
+    toastTextSpan.innerText = "🚀 Selamat datang! Garansi 2x ganti jika mokad. Nikmati panel terbaik!";
+    welcomeToast.style.borderLeftColor = "#3b82f6";
+    welcomeToast.classList.add('show');
+    setTimeout(() => {
+      welcomeToast.classList.remove('show');
+      setTimeout(() => {
+        iconSpan.className = "fas fa-check-circle";
+        iconSpan.style.color = "#4ade80";
+        toastTextSpan.innerText = "Terima kasih! Mengarahkan ke WhatsApp...";
+        welcomeToast.style.borderLeftColor = "#22c55e";
+      }, 400);
+    }, 3200);
+  });
+</script>
+</body>
+</html>
